@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: eafb74b9a3767a64ea63bde539383387
+guid: 67c0166a4995b8e489277cbda331f4db
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5370128271410815945
-    second: character_beige_walk_b_0
+      213: -284007684338051874
+    second: Attack (78x58)_0
+  - first:
+      213: -1349876022115668649
+    second: Attack (78x58)_1
+  - first:
+      213: 5505932642739978319
+    second: Attack (78x58)_2
+  - first:
+      213: 5216252306252847142
+    second: Attack (78x58)_3
+  - first:
+      213: 8622396227195235437
+    second: Attack (78x58)_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +125,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: character_beige_walk_b_0
+      name: Attack (78x58)_0
       rect:
         serializedVersion: 2
-        x: 22
+        x: 18
         y: 0
-        width: 85
-        height: 103
+        width: 61
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +140,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 73c96401ac87975b0800000000000000
-      internalID: -5370128271410815945
+      spriteID: ed49c8d04800f0cf0800000000000000
+      internalID: -284007684338051874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack (78x58)_1
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 16
+        width: 32
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75d6afae8e6444de0800000000000000
+      internalID: -1349876022115668649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack (78x58)_2
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 15
+        width: 21
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f408ebf1190096c40800000000000000
+      internalID: 5505932642739978319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack (78x58)_3
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 13
+        width: 28
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 628530de5d9d36840800000000000000
+      internalID: 5216252306252847142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Attack (78x58)_4
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 13
+        width: 39
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6ce3aa6fa7e8a770800000000000000
+      internalID: 8622396227195235437
       vertices: []
       indices: 
       edges: []
@@ -148,7 +248,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      character_beige_walk_b_0: -5370128271410815945
+      Attack (78x58)_0: -284007684338051874
+      Attack (78x58)_1: -1349876022115668649
+      Attack (78x58)_2: 5505932642739978319
+      Attack (78x58)_3: 5216252306252847142
+      Attack (78x58)_4: 8622396227195235437
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
