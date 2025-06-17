@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     //ANIMATOR IDS
     private int idSpeed;
     private int idIsGrounded;
+    private int idIsWallDetected;
 
     [Header("Move settings")]
     [SerializeField] private float speed;
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
     [Header("Wall settings")]
     [SerializeField] private float checkwallDistance;
     [SerializeField] private bool isWallDetected;
+    [SerializeField] private bool canWallSlide;
+    [SerializeField] private float slideSpeed;
 
     private void Awake()
     {
@@ -50,6 +53,7 @@ public class PlayerController : MonoBehaviour
         
         idSpeed = Animator.StringToHash("speed"); // convertimos los parametros en numero asi el codigo es mas flexible y no tiene que leer 1 x 1 las letras (optimizacion)
         idIsGrounded = Animator.StringToHash("isGrounded");
+        idIsWallDetected = Animator.StringToHash("isWallDetected");
         lFoot = GameObject.Find("LFoot").GetComponent<Transform>();
         rFoot = GameObject.Find("RFoot").GetComponent<Transform>();
 
@@ -65,6 +69,7 @@ public class PlayerController : MonoBehaviour
     {
         m_animator.SetFloat(idSpeed, Mathf.Abs(m_rigidbody2D.linearVelocityX)); // abs es una formula matematica para que el numero q pases siempre sea positivo, ya que la conidicon que de idle pase a run es que speed sea mayor q 0
         m_animator.SetBool(idIsGrounded, isGrounded);
+        m_animator.SetBool(idIsWallDetected, isWallDetected);
     }
 
     void FixedUpdate()
@@ -78,6 +83,16 @@ public class PlayerController : MonoBehaviour
     {
         HandleGround();
         HandleWall();
+        HandleWallSlide();
+    }
+
+    private void HandleWallSlide()
+    {
+        canWallSlide = isWallDetected;
+        if (!canWallSlide) return;
+        canDoubleJump = false;  
+        slideSpeed = m_gatherInput.Value.y < 0 ? 1 : 0.5f;
+        m_rigidbody2D.linearVelocity = new Vector2(m_rigidbody2D.linearVelocityX, m_rigidbody2D.linearVelocityY * slideSpeed);
     }
 
     private void HandleWall()
@@ -105,12 +120,12 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         Flip();
-        m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.ValueX, m_rigidbody2D.linearVelocityY);
+        m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.Value.x, m_rigidbody2D.linearVelocityY);
     }
 
     private void Flip()
     {
-        if (m_gatherInput.ValueX * direction < 0)
+        if (m_gatherInput.Value.x * direction < 0)
         {
             m_transform.localScale = new Vector3(-m_transform.localScale.x, 1, 1);
             direction *= -1;
@@ -123,12 +138,12 @@ public class PlayerController : MonoBehaviour
             if (isGrounded)
             {
 
-            m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.ValueX, jumpForce);
+            m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.Value.x, jumpForce);
                 canDoubleJump = true;
             }
             else if (counterExtraJumps > 0 && canDoubleJump)
             {
-                m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.ValueX, jumpForce);
+                m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.Value.x, jumpForce);
                 counterExtraJumps--;
             }
         }

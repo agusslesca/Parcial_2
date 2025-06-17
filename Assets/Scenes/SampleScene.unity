@@ -14416,8 +14416,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.112771094, y: 0.0042937994}
-  m_Size: {x: 0.68964636, y: 0.86338544}
+  m_Offset: {x: 0.1316579, y: 0.0042937994}
+  m_Size: {x: 0.57159555, y: 0.8228619}
   m_Direction: 0
 --- !u!50 &2083810121
 Rigidbody2D:
@@ -14503,6 +14503,8 @@ MonoBehaviour:
     m_Bits: 128
   checkwallDistance: 0.48
   isWallDetected: 0
+  canWallSlide: 0
+  slideSpeed: 0
 --- !u!114 &2083810124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14515,7 +14517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060a28c881b8f21419dca1e0e841533e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _valueX: 0
+  _value: {x: 0, y: 0}
   _isJumping: 0
 --- !u!95 &2083810125
 Animator:

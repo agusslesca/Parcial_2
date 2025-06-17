@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 public class GatherInput : MonoBehaviour
 {
     private Controls controls;
-    [SerializeField] private float _valueX;
-    public float ValueX { get => _valueX;  }  // encapsulo para poder acceder en playercontroller, get obtener el valor
+    [SerializeField] private Vector2 _value;
+    public Vector2 Value { get => _value;  }  // encapsulo para poder acceder en playercontroller, get obtener el valor
     
     [SerializeField] private bool _isJumping;
     public bool IsJumping { get => _isJumping; set => _isJumping = value; }
@@ -27,12 +27,12 @@ public class GatherInput : MonoBehaviour
 
     private void StartMove(InputAction.CallbackContext context)
     {
-        _valueX = context.ReadValue<float>();
+        _value = context.ReadValue<Vector2>().normalized;
     }
 
     private void StopMove(InputAction.CallbackContext context)
     {
-        _valueX = 0; // cuando no se mueve tambien leemos el valor
+        _value = Vector2.zero; // cuando no se mueve tambien leemos el valor
     }
 
     private void StartJump (InputAction.CallbackContext context)
