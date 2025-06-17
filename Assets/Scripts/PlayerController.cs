@@ -4,23 +4,29 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //PLAYER COMPONENTS
     private Rigidbody2D m_rigidbody2D;
     private GatherInput m_gatherInput;    // lo hago asi por que los listo con la m para poder usarlos rapido y siempre si son de un mismo game obj
     private Transform m_transform;
     private Animator m_animator;
 
+    [Header("Move and Jump settings")]
     [SerializeField] private float speed;
     private int direction = 1;
-    private int idSpeed;
     [SerializeField] private float jumpForce;
+    [SerializeField] private int extrajumps;
+    [SerializeField] private int counterExtraJumps;
+    private int idSpeed;
 
+    [Header("Ground settings")]
     [SerializeField] private Transform lFoot, rFoot;
     [SerializeField] private bool isGrounded;
     [SerializeField] private float rayLenght;
     [SerializeField] private LayerMask groundLayer;
+    private int idIsGrounded;
 
 
-    
+
     void Start()
     {
         m_gatherInput = GetComponent<GatherInput>();
@@ -28,6 +34,7 @@ public class PlayerController : MonoBehaviour
         m_transform = GetComponent<Transform>();
         m_animator = GetComponent<Animator>();
         idSpeed = Animator.StringToHash("Speed"); // convertimos los parametros en numero asi el codigo es mas flexible y no tiene que leer 1 x 1 las letras (optimizacion)
+        idIsGrounded = Animator.StringToHash("isGrounded");
         lFoot = GameObject.Find("LFoot").GetComponent<Transform>();
         rFoot = GameObject.Find("RFoot").GetComponent<Transform>();
 
@@ -42,6 +49,7 @@ public class PlayerController : MonoBehaviour
     private void SetAnimatorValues()
     {
         m_animator.SetFloat(idSpeed, Mathf.Abs(m_rigidbody2D.linearVelocityX)); // abs es una formula matematica para que el numero q pases siempre sea positivo, ya que la conidicon que de idle pase a run es que speed sea mayor q 0
+        m_animator.SetBool(idIsGrounded, isGrounded);
     }
 
     void FixedUpdate()
@@ -73,6 +81,11 @@ public class PlayerController : MonoBehaviour
         {
             if (isGrounded)
             m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.ValueX, jumpForce);
+            if (counterExtraJumps > 0)
+            {
+                m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.ValueX, jumpForce);
+                counterExtraJumps--;
+            }
         }
         m_gatherInput.IsJumping = false;
     }
@@ -85,6 +98,7 @@ public class PlayerController : MonoBehaviour
         if (lFootRay || rFootRay)
         {
             isGrounded = true;
+            counterExtraJumps = extrajumps;
         }
         else
         {
