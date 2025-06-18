@@ -1,20 +1,23 @@
 using System;
 using System.Collections;
-using UnityEditor.Tilemaps;
+using UnityEditor.Tilemaps; // Considera eliminar si no se usa, puede causar problemas al compilar
 using UnityEngine;
+using UnityEngine.SceneManagement; // Agregado para reiniciar el nivel
 
 public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private Transform m_transform;
     private Rigidbody2D m_rigidbody2D;
-    private GatherInput m_gatherInput;    // lo hago asi por que los listo con la m para poder usarlos rapido y siempre si son de un mismo game obj
+    private GatherInput m_gatherInput;    // Lo hago así porque los listo con la m para poder usarlos rápido y siempre si son de un mismo game obj
     private Animator m_animator;
 
-    //ANIMATOR IDS
+    // ANIMATOR IDS
     private int idSpeed;
     private int idIsGrounded;
     private int idIsWallDetected;
+    private int idknockBack;
+    private int idDeath; // <-- NUEVO: ID del Animator para la animación de muerte
 
     [Header("Move settings")]
     [SerializeField] private float speed;
@@ -43,41 +46,63 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isWallJumping;
     [SerializeField] private float wallJumpDuration;
 
+    // Elimina la sección de Knock settings si ya no la usas
+    // [Header("Knock settings")]
+    // [SerializeField] private bool isKnocked;
+    // [SerializeField] private bool canBeKnocked;
+    // [SerializeField] private Vector2 knockedPower;
+    // [SerializeField] private float knockedDuration;
+
+    [Header("Death Settings")] // <-- NUEVO: Sección para variables relacionadas con la muerte
+    [SerializeField] private bool isDead; // <-- NUEVO: Indica si el jugador está muerto
+    [SerializeField] private float restartDelay = 2f; // <-- NUEVO: Tiempo antes de reiniciar el nivel
+
     private void Awake()
     {
         m_gatherInput = GetComponent<GatherInput>();
         m_rigidbody2D = GetComponent<Rigidbody2D>();
-        //m_transform = GetComponent<Transform>();
+        //m_transform = GetComponent<Transform>(); // Esta línea está comentada, asegúrate de asignar m_transform en el Inspector o descomenta si es necesario
         m_animator = GetComponent<Animator>();
     }
 
-
     void Start()
     {
-        
-        idSpeed = Animator.StringToHash("speed"); // convertimos los parametros en numero asi el codigo es mas flexible y no tiene que leer 1 x 1 las letras (optimizacion)
+        idSpeed = Animator.StringToHash("speed");
         idIsGrounded = Animator.StringToHash("isGrounded");
         idIsWallDetected = Animator.StringToHash("isWallDetected");
+        idknockBack = Animator.StringToHash("knockBack");
+        idDeath = Animator.StringToHash("death"); // <-- NUEVO: Inicializamos idDeath
         lFoot = GameObject.Find("LFoot").GetComponent<Transform>();
         rFoot = GameObject.Find("RFoot").GetComponent<Transform>();
 
+        // Asegúrate de que m_transform esté asignado, si no está configurado en el Inspector y la línea de arriba está comentada
+        if (m_transform == null)
+        {
+            m_transform = transform; // Asigna la transformación actual si no está configurada
+        }
     }
 
     private void Update()
     {
+        // Si el jugador está muerto, deja de procesar cualquier actualización
+        if (isDead) return; // <-- NUEVO: Evita actualizaciones si está muerto
+
         SetAnimatorValues();
-        
     }
 
     private void SetAnimatorValues()
     {
-        m_animator.SetFloat(idSpeed, Mathf.Abs(m_rigidbody2D.linearVelocityX)); // abs es una formula matematica para que el numero q pases siempre sea positivo, ya que la conidicon que de idle pase a run es que speed sea mayor q 0
+        m_animator.SetFloat(idSpeed, Mathf.Abs(m_rigidbody2D.linearVelocity.x));
         m_animator.SetBool(idIsGrounded, isGrounded);
         m_animator.SetBool(idIsWallDetected, isWallDetected);
     }
 
     void FixedUpdate()
     {
+        // Si el jugador está muerto, deja de procesar cualquier actualización de física
+        // if (isKnocked || isDead) return; // Descomenta 'isKnocked' si re-implementas el knockback
+        if (isDead) return; // <-- NUEVO: Evita actualizaciones de física si está muerto
+
         CheckCollision();
         Move();
         Jump();
@@ -94,9 +119,9 @@ public class PlayerController : MonoBehaviour
     {
         canWallSlide = isWallDetected;
         if (!canWallSlide) return;
-        canDoubleJump = false;  
+        canDoubleJump = false;
         slideSpeed = m_gatherInput.Value.y < 0 ? 1 : 0.5f;
-        m_rigidbody2D.linearVelocity = new Vector2(m_rigidbody2D.linearVelocityX, m_rigidbody2D.linearVelocityY * slideSpeed);
+        m_rigidbody2D.linearVelocity = new Vector2(m_rigidbody2D.linearVelocity.x, m_rigidbody2D.linearVelocity.y * slideSpeed);
     }
 
     private void HandleWall()
@@ -106,8 +131,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleGround()
     {
-         lFootRay = Physics2D.Raycast(lFoot.position, Vector2.down, rayLenght, groundLayer);
-         rFootRay = Physics2D.Raycast(rFoot.position, Vector2.down, rayLenght, groundLayer);
+        lFootRay = Physics2D.Raycast(lFoot.position, Vector2.down, rayLenght, groundLayer);
+        rFootRay = Physics2D.Raycast(rFoot.position, Vector2.down, rayLenght, groundLayer);
 
         if (lFootRay || rFootRay)
         {
@@ -126,24 +151,29 @@ public class PlayerController : MonoBehaviour
         if (isWallDetected && !isGrounded) return;
         if (isWallJumping) return;
         Flip();
-        m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.Value.x, m_rigidbody2D.linearVelocityY);
+        m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.Value.x, m_rigidbody2D.linearVelocity.y);
     }
 
     private void Flip()
     {
         if (m_gatherInput.Value.x * direction < 0)
         {
-            m_transform.localScale = new Vector3(-m_transform.localScale.x, 1, 1);
-            direction *= -1;
+            HandleDirection();
         }
     }
+
+    private void HandleDirection()
+    {
+        m_transform.localScale = new Vector3(-m_transform.localScale.x, 1, 1);
+        direction *= -1;
+    }
+
     private void Jump()
     {
         if (m_gatherInput.IsJumping)
         {
             if (isGrounded)
             {
-
                 m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.Value.x, jumpForce);
                 canDoubleJump = true;
             }
@@ -151,35 +181,66 @@ public class PlayerController : MonoBehaviour
             else if (counterExtraJumps > 0 && canDoubleJump)
             {
                 DoubleJump();
-
             }
         }
         m_gatherInput.IsJumping = false;
     }
 
-
     private void wallJump()
     {
-        
         m_rigidbody2D.linearVelocity = new Vector2(wallJumpForce.x * -direction, wallJumpForce.y);
+        HandleDirection();
         StartCoroutine(WallJumpRoutine());
     }
 
-    IEnumerator WallJumpRoutine() //metodo corrutina para recuperar el movimiento despues del salto en la pared
+    IEnumerator WallJumpRoutine()
     {
         isWallJumping = true;
         yield return new WaitForSeconds(wallJumpDuration);
         isWallJumping = false;
     }
+
     private void DoubleJump()
     {
         m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.Value.x, jumpForce);
         counterExtraJumps--;
     }
 
-    private void OnDrawGizmos() //dibujar gizmos
+    /// <summary>
+    /// Gestiona la secuencia de muerte del jugador.
+    /// Detiene el movimiento, activa la animación de muerte y reinicia el nivel después de un retraso.
+    /// </summary>
+    public void Die() // <-- NUEVO: Método público para gestionar la muerte del jugador
+    {
+        if (isDead) return; // Evita múltiples llamadas a la muerte
+
+        Debug.Log("Player: ¡Moriste!"); // Mensaje de depuración para la muerte
+        isDead = true; // Establece el estado del jugador a muerto
+
+        // Detiene el movimiento y la física del jugador
+        m_rigidbody2D.linearVelocity = Vector2.zero; // Detiene toda la velocidad
+        m_rigidbody2D.bodyType = RigidbodyType2D.Kinematic; // Hace que el Rigidbody sea cinemático para detener la interacción física
+        // Alternativamente, podrías deshabilitar el collider: GetComponent<Collider2D>().enabled = false;
+
+        m_animator.SetTrigger(idDeath); // Activa el trigger de la animación de muerte
+
+        // Puedes deshabilitar la entrada u otros scripts aquí
+        // m_gatherInput.DisableInput(); // Asumiendo que tienes un método para deshabilitar la entrada en GatherInput
+
+        // Reinicia el nivel después de un breve retraso
+        Invoke("RestartLevel", restartDelay);
+    }
+
+    /// <summary>
+    /// Reinicia la escena actual.
+    /// </summary>
+    private void RestartLevel() // <-- NUEVO: Método para reiniciar el nivel
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnDrawGizmos() // Dibujar gizmos
     {
         Gizmos.DrawLine(m_transform.position, new Vector2(m_transform.position.x + (checkwallDistance * direction), m_transform.position.y));
     }
-
 }
