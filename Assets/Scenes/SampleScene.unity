@@ -222,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 439541093}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.85, y: 2.06, z: -10}
+  m_LocalPosition: {x: -2.5, y: 20.28, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -393,7 +393,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08951616, y: 3.75001, z: -10}
+  m_LocalPosition: {x: -0.04561472, y: 20.27738, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14374,7 +14374,7 @@ Transform:
   m_GameObject: {fileID: 2083810117}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.85, y: 2.06, z: 0}
+  m_LocalPosition: {x: -2.5, y: 20.28, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14505,6 +14505,9 @@ MonoBehaviour:
   isWallDetected: 0
   canWallSlide: 0
   slideSpeed: 0
+  wallJumpForce: {x: 10, y: 16}
+  isWallJumping: 0
+  wallJumpDuration: 0.3
 --- !u!114 &2083810124
 MonoBehaviour:
   m_ObjectHideFlags: 0
