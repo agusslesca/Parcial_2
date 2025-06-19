@@ -33,4 +33,14 @@ public class WinPoint : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(home);
     }
+
+    public void RestartLevel()
+    {
+
+        Time.timeScale = 1f; // Quitar la pausa por si estaba pausado
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Recargar la escena actual
+
+    }
+
+    
 }
