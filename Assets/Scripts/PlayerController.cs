@@ -46,16 +46,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isWallJumping;
     [SerializeField] private float wallJumpDuration;
 
-    // Elimina la sección de Knock settings si ya no la usas
-    // [Header("Knock settings")]
-    // [SerializeField] private bool isKnocked;
-    // [SerializeField] private bool canBeKnocked;
-    // [SerializeField] private Vector2 knockedPower;
-    // [SerializeField] private float knockedDuration;
+   
 
     [Header("Death Settings")] // <-- NUEVO: Sección para variables relacionadas con la muerte
     [SerializeField] private bool isDead; // <-- NUEVO: Indica si el jugador está muerto
-    [SerializeField] private float restartDelay = 2f; // <-- NUEVO: Tiempo antes de reiniciar el nivel
+    
 
     private void Awake()
     {
@@ -220,15 +215,11 @@ public class PlayerController : MonoBehaviour
 
         m_animator.SetTrigger(idDeath); 
        
-        // Reinicia el nivel después de un breve retraso
-        Invoke("RestartLevel", restartDelay);
+        
     }
 
    
-    private void RestartLevel() //  Método para reiniciar el nivel
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+    
 
     private void OnDrawGizmos() // Dibujar gizmos
     {
