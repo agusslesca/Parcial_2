@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using UnityEditor.Tilemaps; // Considera eliminar si no se usa, puede causar problemas al compilar
+using UnityEditor.Tilemaps; 
 using UnityEngine;
 using UnityEngine.SceneManagement; // Agregado para reiniciar el nivel
 
@@ -99,9 +99,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Si el jugador está muerto, deja de procesar cualquier actualización de física
-        // if (isKnocked || isDead) return; // Descomenta 'isKnocked' si re-implementas el knockback
-        if (isDead) return; // <-- NUEVO: Evita actualizaciones de física si está muerto
+        
+        if (isDead) return; 
 
         CheckCollision();
         Move();
@@ -206,35 +205,27 @@ public class PlayerController : MonoBehaviour
         counterExtraJumps--;
     }
 
-    /// <summary>
-    /// Gestiona la secuencia de muerte del jugador.
-    /// Detiene el movimiento, activa la animación de muerte y reinicia el nivel después de un retraso.
-    /// </summary>
-    public void Die() // <-- NUEVO: Método público para gestionar la muerte del jugador
+    
+    public void Die() 
     {
         if (isDead) return; // Evita múltiples llamadas a la muerte
 
-        Debug.Log("Player: ¡Moriste!"); // Mensaje de depuración para la muerte
-        isDead = true; // Establece el estado del jugador a muerto
+        
+        isDead = true; 
 
         // Detiene el movimiento y la física del jugador
-        m_rigidbody2D.linearVelocity = Vector2.zero; // Detiene toda la velocidad
-        m_rigidbody2D.bodyType = RigidbodyType2D.Kinematic; // Hace que el Rigidbody sea cinemático para detener la interacción física
-        // Alternativamente, podrías deshabilitar el collider: GetComponent<Collider2D>().enabled = false;
+        m_rigidbody2D.linearVelocity = Vector2.zero;
+        m_rigidbody2D.bodyType = RigidbodyType2D.Kinematic; 
+        
 
-        m_animator.SetTrigger(idDeath); // Activa el trigger de la animación de muerte
-
-        // Puedes deshabilitar la entrada u otros scripts aquí
-        // m_gatherInput.DisableInput(); // Asumiendo que tienes un método para deshabilitar la entrada en GatherInput
-
+        m_animator.SetTrigger(idDeath); 
+       
         // Reinicia el nivel después de un breve retraso
         Invoke("RestartLevel", restartDelay);
     }
 
-    /// <summary>
-    /// Reinicia la escena actual.
-    /// </summary>
-    private void RestartLevel() // <-- NUEVO: Método para reiniciar el nivel
+   
+    private void RestartLevel() //  Método para reiniciar el nivel
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
