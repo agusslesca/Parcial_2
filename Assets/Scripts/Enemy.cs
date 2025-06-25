@@ -4,24 +4,24 @@ using UnityEngine.SceneManagement;
 public class DeathZone : MonoBehaviour
 {
     [Header("UI del menú de muerte")]
-    [SerializeField] private GameObject deadPanel;   // ← arrastra aquí tu panel “Has muerto”
+    [SerializeField] private GameObject deadPanel;   // panel “Has muerto”
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
 
-        // 1️⃣ Opcional: animación + bloqueo de controles desde PlayerController
+        //  animación + bloqueo de controles desde PlayerController
         PlayerController player = collision.GetComponent<PlayerController>();
         if (player != null)
         {
             player.Die();   // sigue usando tu lógica de animación / disable movimiento
         }
 
-        // 2️⃣ Mostrar panel de muerte
+        // Mostrar panel de muerte
         if (deadPanel != null)
             deadPanel.SetActive(true);
 
-        // 3️⃣ Pausar todo
+        // Pausar todo
         Time.timeScale = 0f;
     }
 

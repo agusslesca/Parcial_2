@@ -16,8 +16,7 @@ public class PlayerController : MonoBehaviour
     private int idSpeed;
     private int idIsGrounded;
     private int idIsWallDetected;
-    private int idknockBack;
-    private int idDeath; // <-- NUEVO: ID del Animator para la animación de muerte
+    private int idDeath; 
 
     [Header("Move settings")]
     [SerializeField] private float speed;
@@ -48,15 +47,15 @@ public class PlayerController : MonoBehaviour
 
    
 
-    [Header("Death Settings")] // <-- NUEVO: Sección para variables relacionadas con la muerte
-    [SerializeField] private bool isDead; // <-- NUEVO: Indica si el jugador está muerto
+    [Header("Death Settings")] 
+    [SerializeField] private bool isDead; 
     
 
     private void Awake()
     {
         m_gatherInput = GetComponent<GatherInput>();
         m_rigidbody2D = GetComponent<Rigidbody2D>();
-        //m_transform = GetComponent<Transform>(); // Esta línea está comentada, asegúrate de asignar m_transform en el Inspector o descomenta si es necesario
+        //m_transform = GetComponent<Transform>(); 
         m_animator = GetComponent<Animator>();
     }
 
@@ -65,22 +64,21 @@ public class PlayerController : MonoBehaviour
         idSpeed = Animator.StringToHash("speed");
         idIsGrounded = Animator.StringToHash("isGrounded");
         idIsWallDetected = Animator.StringToHash("isWallDetected");
-        idknockBack = Animator.StringToHash("knockBack");
         idDeath = Animator.StringToHash("death"); // <-- NUEVO: Inicializamos idDeath
         lFoot = GameObject.Find("LFoot").GetComponent<Transform>();
         rFoot = GameObject.Find("RFoot").GetComponent<Transform>();
 
-        // Asegúrate de que m_transform esté asignado, si no está configurado en el Inspector y la línea de arriba está comentada
+        
         if (m_transform == null)
         {
-            m_transform = transform; // Asigna la transformación actual si no está configurada
+            m_transform = transform; 
         }
     }
 
     private void Update()
     {
         // Si el jugador está muerto, deja de procesar cualquier actualización
-        if (isDead) return; // <-- NUEVO: Evita actualizaciones si está muerto
+        if (isDead) return; 
 
         SetAnimatorValues();
     }
