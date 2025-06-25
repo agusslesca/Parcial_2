@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BG RollBall 2_0: -6880891419692518750
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

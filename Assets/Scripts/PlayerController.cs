@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using UnityEditor.Tilemaps; 
+
 using UnityEngine;
 using UnityEngine.SceneManagement; // Agregado para reiniciar el nivel
 
