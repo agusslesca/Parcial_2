@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D m_rigidbody2D;
     private GatherInput m_gatherInput;    // Lo hago así porque los listo con la m para poder usarlos rápido y siempre si son de un mismo game obj
     private Animator m_animator;
+    private AudioSource audioSource;
 
     // ANIMATOR IDS
     private int idSpeed;
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         //m_transform = GetComponent<Transform>(); 
         m_animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -168,11 +170,18 @@ public class PlayerController : MonoBehaviour
             {
                 m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.Value.x, jumpForce);
                 canDoubleJump = true;
+                audioSource.Play();
             }
-            else if (isWallDetected) wallJump();
+            else if (isWallDetected) 
+            {
+                wallJump();
+                audioSource.Play();
+
+            }
             else if (counterExtraJumps > 0 && canDoubleJump)
             {
                 DoubleJump();
+                audioSource.Play();
             }
         }
         m_gatherInput.IsJumping = false;
