@@ -8,9 +8,10 @@ public class MenuPausa : MonoBehaviour
 
     public void Pause()
     {
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
         botonPausa.SetActive(false);
         menuPausa.SetActive(true);
+
     }
 
     public void Resume()
@@ -20,7 +21,7 @@ public class MenuPausa : MonoBehaviour
         menuPausa.SetActive(false);
     }
 
-    public void Reiniciar()
+    public void Restart()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -28,8 +29,7 @@ public class MenuPausa : MonoBehaviour
 
     public void Back()
     {
-
-        Time.timeScale = 1f; // Por si el juego está pausado
+        Time.timeScale = 1f; // por si el jeugo esta pausado
         SceneManager.LoadScene("MenuPrincipal");
     }
 }

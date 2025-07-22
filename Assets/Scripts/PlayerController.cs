@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 
 using UnityEngine;
-using UnityEngine.SceneManagement; // Agregado para reiniciar el nivel
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -224,10 +224,7 @@ public class PlayerController : MonoBehaviour
        
         
     }
-
-   
     
-
     private void OnDrawGizmos() // Dibujar gizmos
     {
         Gizmos.DrawLine(m_transform.position, new Vector2(m_transform.position.x + (checkwallDistance * direction), m_transform.position.y));

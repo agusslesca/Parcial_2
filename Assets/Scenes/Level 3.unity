@@ -555,7 +555,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 334652243}
+      - m_Target: {fileID: 334652248}
         m_TargetAssemblyTypeName: MenuPausa, Assembly-CSharp
         m_MethodName: Resume
         m_Mode: 1
@@ -762,9 +762,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 334652243}
+      - m_Target: {fileID: 334652248}
         m_TargetAssemblyTypeName: MenuPausa, Assembly-CSharp
-        m_MethodName: Reiniciar
+        m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -825,6 +825,7 @@ GameObject:
   - component: {fileID: 334652245}
   - component: {fileID: 334652244}
   - component: {fileID: 334652243}
+  - component: {fileID: 334652248}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -844,8 +845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8867f75fff48dce41965bf17d2d523da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botonPausa: {fileID: 1757263584}
-  menuPausa: {fileID: 1829682117}
 --- !u!114 &334652244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -932,6 +931,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &334652248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334652242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79da8725403077248b549b9247efd32f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  botonPausa: {fileID: 1757263584}
+  menuPausa: {fileID: 1829682117}
 --- !u!1 &378971619
 GameObject:
   m_ObjectHideFlags: 0
@@ -78981,7 +78994,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 334652243}
+      - m_Target: {fileID: 334652248}
         m_TargetAssemblyTypeName: MenuPausa, Assembly-CSharp
         m_MethodName: Pause
         m_Mode: 1
@@ -79827,7 +79840,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 334652243}
+      - m_Target: {fileID: 334652248}
         m_TargetAssemblyTypeName: MenuPausa, Assembly-CSharp
         m_MethodName: Back
         m_Mode: 1
