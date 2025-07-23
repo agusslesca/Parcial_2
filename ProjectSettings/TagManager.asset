@@ -44,14 +44,14 @@ TagManager:
   - name: Background
     uniqueID: 1048904347
     locked: 0
-  - name: Ground
-    uniqueID: 144292277
+  - name: Items
+    uniqueID: 1104743079
     locked: 0
   - name: Player
     uniqueID: 2270253633
     locked: 0
-  - name: Items
-    uniqueID: 1104743079
+  - name: Ground
+    uniqueID: 144292277
     locked: 0
   m_RenderingLayers:
   - Default
