@@ -7,6 +7,12 @@ public class MenuPrincipal : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); // LE SUMO 1 A LA ESCENA EN LA Q ESTOY
     }
+
+    public void ComoJugar()
+    {
+        SceneManager.LoadScene("ComoJugar");
+    }
+
     
     public void Quit()
     {

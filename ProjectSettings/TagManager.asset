@@ -16,7 +16,7 @@ TagManager:
   - Ignore
   - Enemy
   - Door
-  - 
+  - Items
   - 
   - 
   - 
@@ -49,6 +49,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2270253633
+    locked: 0
+  - name: Items
+    uniqueID: 1104743079
     locked: 0
   m_RenderingLayers:
   - Default
