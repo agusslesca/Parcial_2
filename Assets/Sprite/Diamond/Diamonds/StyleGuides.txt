@@ -1,0 +1,11 @@
+
+GUÍA DE ESTILOS C#
+
+    - variables privadas = _viariable;
+    - variables privadas serializadas = viariable;
+    - variables publicas = Variable;
+    - accesos get o set=   =>
+    - Campos publicos con uso de variable privada en clase
+    - variables componentes locales m por delante = mNombreComponente;
+    - Por defecto todas las variables son privadas;
+    - Por defecto todos los métodos son privados;
