@@ -17,7 +17,8 @@ public class PlayerController : MonoBehaviour
     private int idSpeed;
     private int idIsGrounded;
     private int idIsWallDetected;
-    private int idDeath; 
+    private int idDeath;
+    private int idKnockBack;
 
     [Header("Move settings")]
     [SerializeField] private float speed;
@@ -46,6 +47,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isWallJumping;
     [SerializeField] private float wallJumpDuration;
 
+    [Header("Knock settings")]
+    [SerializeField] private bool isKnocked;
+    [SerializeField] private bool canBeKnocked;
+    [SerializeField] private Vector2 knockedPower;
+    [SerializeField] private float knockedDuration;
+
    
 
     [Header("Death Settings")] 
@@ -67,6 +74,7 @@ public class PlayerController : MonoBehaviour
         idIsGrounded = Animator.StringToHash("isGrounded");
         idIsWallDetected = Animator.StringToHash("isWallDetected");
         idDeath = Animator.StringToHash("death"); // <-- NUEVO: Inicializamos idDeath
+        idKnockBack = Animator.StringToHash("knockBack");
         lFoot = GameObject.Find("LFoot").GetComponent<Transform>();
         rFoot = GameObject.Find("RFoot").GetComponent<Transform>();
 
@@ -94,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+        if (isKnocked) return; // si es nockeadco no quiero q haga nada lo de abajo
         if (isDead) return; 
 
         CheckCollision();
@@ -207,7 +215,23 @@ public class PlayerController : MonoBehaviour
         counterExtraJumps--;
     }
 
-    
+    public void KnockBack()
+    {
+        StartCoroutine(KnockBackRoutine());
+        m_rigidbody2D.linearVelocity = new Vector2(knockedPower.x * -direction, knockedPower.y);
+        m_animator.SetTrigger(idKnockBack);
+    }
+
+    private IEnumerator KnockBackRoutine()
+    {
+        isKnocked = true;
+        canBeKnocked = false;
+        yield return new WaitForSeconds(knockedDuration);
+        isKnocked = false;
+        canBeKnocked = true;
+
+    }
+
     public void Die() 
     {
         if (isDead) return; // Evita múltiples llamadas a la muerte
