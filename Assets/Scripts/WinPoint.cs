@@ -30,14 +30,13 @@ public class WinPoint : MonoBehaviour
         }
         else
         {
-            Debug.Log("¡Aún faltan diamantes para terminar el nivel!");
-            // Aquí puedes mostrar un mensaje en pantalla si quieres
+            
             if (mensajeDiamantes != null)
-                StartCoroutine(MostrarMensajeTemporal());
+                StartCoroutine(MostrarMensajeTemporal()); // mostrar mensaje
         }
     }
 
-    private IEnumerator MostrarMensajeTemporal()
+    private IEnumerator MostrarMensajeTemporal() // corrrutina mensaje temporal
     {
         mensajeDiamantes.SetActive(true);
         yield return new WaitForSeconds(duracionMensaje);

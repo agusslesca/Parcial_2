@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 //color normal (no completado)
-                contadorDiamantesTexto.color = Color.white;
+                contadorDiamantesTexto.color = Color.red;
             }
             contadorDiamantesTexto.text = $"Diamantes: {_diamondCollected} / {_totalDiamonds}";
         }
