@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: e45f0b38597f10f4d87a978491197e23
+guid: d1cf4de10108aa540b0a1a94f3f0abb5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4557684136233861674
-    second: Hit (78x58)_0
+      213: 4723107735738678597
+    second: Idle_0
   - first:
-      213: -6048739241746539578
-    second: Hit (78x58)_1
+      213: -7385789195546760866
+    second: Idle_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -116,45 +116,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hit (78x58)_0
+      name: Spike_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 78
-        height: 58
-      alignment: 9
-      pivot: {x: 0.41, y: 0.5}
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 6ddf85dfc6adfb0c0800000000000000
-      internalID: -4557684136233861674
+      spriteID: 09e0a25fe63f6024199d7b308cbbef6b
+      internalID: -1625178877
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hit (78x58)_1
+      name: Spike_1
       rect:
         serializedVersion: 2
-        x: 77
+        x: 8
         y: 0
-        width: 78
-        height: 58
-      alignment: 9
-      pivot: {x: 0.41, y: 0.5}
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 6cb5bbc05bf8e0ca0800000000000000
-      internalID: -6048739241746539578
+      spriteID: 9c5802339b01d6f49ad15cfa17e38c06
+      internalID: -920890560
       vertices: []
       indices: 
       edges: []
@@ -163,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: fed3640da050eaa45a8b39e2e9b6f71a
+    spriteID: c4c18abf3ef1f45459aec9f6f71d79c7
     internalID: 0
     vertices: []
     indices: 
@@ -173,8 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Hit (78x58)_0: -4557684136233861674
-      Hit (78x58)_1: -6048739241746539578
+      Spike_0: -1625178877
+      Spike_1: -920890560
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
