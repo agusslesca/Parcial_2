@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class WinPoint : MonoBehaviour
@@ -9,19 +10,40 @@ public class WinPoint : MonoBehaviour
     [Header("Escena a cargar")]
     [SerializeField] private string nextLevelName = "Level 2";   // pon el nombre exacto de la próxima escena
     private string home = "MenuPrincipal";
+
+    [SerializeField] private GameObject mensajeDiamantes;
+    [SerializeField] private float duracionMensaje = 2f;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
 
-        // Mostrar panel de victoria
-        if (winPanel != null)
-            winPanel.SetActive(true);
+        // Verifica si ya se recolectaron todos los diamantes
+        if (GameManager.instance.DiamondCollected >= GameManager.instance.TotalDiamonds)
+        {
+            // Mostrar panel de victoria
+            if (winPanel != null)
+                winPanel.SetActive(true);
 
-        // Pausar el juego
-        Time.timeScale = 0f;
+            // Pausar el juego
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Debug.Log("¡Aún faltan diamantes para terminar el nivel!");
+            // Aquí puedes mostrar un mensaje en pantalla si quieres
+            if (mensajeDiamantes != null)
+                StartCoroutine(MostrarMensajeTemporal());
+        }
     }
 
-    
+    private IEnumerator MostrarMensajeTemporal()
+    {
+        mensajeDiamantes.SetActive(true);
+        yield return new WaitForSeconds(duracionMensaje);
+        mensajeDiamantes.SetActive(false);
+    }
+
     public void NextLevel()
     {
         Time.timeScale = 1f;                       // quitar la pausa
@@ -36,11 +58,8 @@ public class WinPoint : MonoBehaviour
 
     public void RestartLevel()
     {
-
         Time.timeScale = 1f; // Quitar la pausa por si estaba pausado
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Recargar la escena actual
-
     }
-
-    
 }
+
