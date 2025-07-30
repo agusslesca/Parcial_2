@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ToggleSoundButton : MonoBehaviour
+public class ToggleSoundButtonBackGround : MonoBehaviour
 {
     public Sprite spriteOff;
     public Sprite spriteTransition;
