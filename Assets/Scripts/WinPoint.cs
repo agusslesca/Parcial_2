@@ -5,14 +5,24 @@ using UnityEngine.SceneManagement;
 public class WinPoint : MonoBehaviour
 {
     [Header("UI del menú de victoria")]
-    [SerializeField] private GameObject winPanel;        // ← arrastra aquí tu panel “Win”
+    [SerializeField] private GameObject winPanel;        
 
     [Header("Escena a cargar")]
-    [SerializeField] private string nextLevelName = "Level 2";   // pon el nombre exacto de la próxima escena
+    [SerializeField] private string nextLevelName = "Level 2";    
     private string home = "MenuPrincipal";
 
     [SerializeField] private GameObject mensajeDiamantes;
     [SerializeField] private float duracionMensaje = 2f;
+
+    // Función para repodrucir clicksound
+    private void PlayClickSound()
+    {
+        
+        if (SFX_Controller.Instance != null)
+        {
+            SFX_Controller.Instance.PlaySFX("Click");
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -27,10 +37,14 @@ public class WinPoint : MonoBehaviour
 
             // Pausar el juego
             Time.timeScale = 0f;
+
+            // LLAMO AL CLIP DE AUDIO DE VICTORIA
+             
+             if (SFX_Controller.Instance != null) { SFX_Controller.Instance.PlaySFX("Victoria"); }
         }
         else
         {
-            
+
             if (mensajeDiamantes != null)
                 StartCoroutine(MostrarMensajeTemporal()); // mostrar mensaje
         }
@@ -45,18 +59,27 @@ public class WinPoint : MonoBehaviour
 
     public void NextLevel()
     {
-        Time.timeScale = 1f;                       // quitar la pausa
+        
+        PlayClickSound();
+
+        Time.timeScale = 1f;                    // quitar la pausa
         SceneManager.LoadScene(nextLevelName);
     }
 
     public void BackMenu()
     {
+        
+        PlayClickSound();
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(home);
     }
 
     public void RestartLevel()
     {
+        
+        PlayClickSound();
+
         Time.timeScale = 1f; // Quitar la pausa por si estaba pausado
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Recargar la escena actual
     }

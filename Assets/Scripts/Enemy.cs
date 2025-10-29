@@ -6,6 +6,16 @@ public class DeathZone : MonoBehaviour
     [Header("UI del menú de muerte")]
     [SerializeField] private GameObject deadPanel;   // panel “Has muerto”
 
+    // Función auxiliar para reproducir el sonido de Daño/Hit
+    private void PlayHitSound()
+    {
+        
+        if (SFX_Controller.Instance != null)
+        {
+            SFX_Controller.Instance.PlaySFX("Danio");
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
@@ -14,7 +24,7 @@ public class DeathZone : MonoBehaviour
         PlayerController player = collision.GetComponent<PlayerController>();
         if (player != null)
         {
-            player.Die();   // sigue usando tu lógica de animación / disable movimiento
+            player.Die();    // sigue usando tu lógica de animación / disable movimiento
         }
 
         // Mostrar panel de muerte
@@ -25,17 +35,22 @@ public class DeathZone : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    
+
     public void RestartLevel()
     {
-        Time.timeScale = 1f;                                            // quitar la pausa
+        PlayHitSound();
+
+        Time.timeScale = 1f;                                
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    
+
     public void BackToMainMenu()
     {
-        Time.timeScale = 1f;                                            // quitar la pausa
-        SceneManager.LoadScene("MenuPrincipal");  // usa el nombre exacto de tu escena de menú
+        
+        PlayHitSound();
+
+        Time.timeScale = 1f;                                 
+        SceneManager.LoadScene("MenuPrincipal"); 
     }
 }

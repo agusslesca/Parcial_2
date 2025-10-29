@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D m_rigidbody2D;
     private GatherInput m_gatherInput;    // Lo hago así porque los listo con la m para poder usarlos rápido y siempre si son de un mismo game obj
     private Animator m_animator;
-    private AudioSource audioSource;
+    
 
     // ANIMATOR IDS
     private int idSpeed;
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         //m_transform = GetComponent<Transform>(); 
         m_animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+        
     }
 
     void Start()
@@ -178,21 +178,35 @@ public class PlayerController : MonoBehaviour
             {
                 m_rigidbody2D.linearVelocity = new Vector2(speed * m_gatherInput.Value.x, jumpForce);
                 canDoubleJump = true;
-                audioSource.Play();
+                PlayJumpSound();
+
             }
             else if (isWallDetected) 
             {
                 wallJump();
-                audioSource.Play();
+                PlayJumpSound();
 
             }
             else if (counterExtraJumps > 0 && canDoubleJump)
             {
                 DoubleJump();
-                audioSource.Play();
+                PlayJumpSound();
+
+
+
             }
         }
         m_gatherInput.IsJumping = false;
+    }
+
+    // === NUEVA FUNCIÓN AÑADIDA PARA CENTRALIZAR LA LLAMADA AL MANAGER ===
+    private void PlayJumpSound()
+    {
+        // El nombre "Salto" debe coincidir EXACTAMENTE con el campo 'Nombre' en el Inspector del SFX_Controller
+        if (SFX_Controller.Instance != null)
+        {
+            SFX_Controller.Instance.PlaySFX("Salto");
+        }
     }
 
     private void wallJump()
@@ -217,9 +231,21 @@ public class PlayerController : MonoBehaviour
 
     public void KnockBack()
     {
+        PlayHitSound();
         StartCoroutine(KnockBackRoutine());
         m_rigidbody2D.linearVelocity = new Vector2(knockedPower.x * -direction, knockedPower.y);
         m_animator.SetTrigger(idKnockBack);
+    }
+
+    // === Nueva función auxiliar para centralizar la llamada al Manager ===
+    private void PlayHitSound()
+    {
+        // El nombre "Danio" debe coincidir EXACTAMENTE con el campo 'Nombre' en el Inspector.
+        if (SFX_Controller.Instance != null)
+        {
+            // Usamos "Danio" o "Hit" dependiendo de cómo lo llamaste en tu SFX_Controller
+            SFX_Controller.Instance.PlaySFX("Danio");
+        }
     }
 
     private IEnumerator KnockBackRoutine()

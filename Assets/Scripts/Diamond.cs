@@ -23,7 +23,16 @@ public class Diamond : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameManager.instance;
+        // Asegura que el GameManager esté disponible (si usa el patrón Singleton 'instance')
+        if (GameManager.instance != null)
+        {
+            gameManager = GameManager.instance;
+        }
+        else
+        {
+            Debug.LogError("Diamond.cs: GameManager.instance no encontrado. Asegúrate de que el GameManager esté en la escena.");
+        }
+
         SetRandomDiamond();
     }
 
@@ -40,6 +49,17 @@ public class Diamond : MonoBehaviour
             //spriteRenderer.enabled = false;
             m_rigibody2D.simulated = false;
             gameManager.AddDiamond();
+
+            // =========================================================
+            // === CÓDIGO AÑADIDO: Reproducir el sonido "Recoger" ===
+            // =========================================================
+            if (SFX_Controller.Instance != null)
+            {
+                // El nombre "Recoger" debe coincidir EXACTAMENTE con el campo 'Nombre' en el Inspector del SFX_Controller
+                SFX_Controller.Instance.PlaySFX("Recoger");
+            }
+            // =========================================================
+
             animator.SetTrigger(idPickedDiamond);// ejecutar la animacion de collect del diamond
         }
     }

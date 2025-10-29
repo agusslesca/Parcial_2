@@ -6,7 +6,12 @@ public class Damage : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerController>().KnockBack();
+            if (SFX_Controller.Instance != null)
+            {
+                collision.GetComponent<PlayerController>().KnockBack();
+                SFX_Controller.Instance.PlaySFX("Danio"); // Llama al clip que nombraste "Danio"
+            }
+            
         }
     }
 }
