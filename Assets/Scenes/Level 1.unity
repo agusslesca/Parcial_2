@@ -2161,6 +2161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   botonPausa: {fileID: 1757263584}
   menuPausa: {fileID: 1829682117}
+  masterMixer: {fileID: 0}
 --- !u!1 &340398083
 GameObject:
   m_ObjectHideFlags: 0
@@ -9939,7 +9940,7 @@ AudioSource:
   m_GameObject: {fileID: 1386660101}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 522340d7c67c5b84dadd8d0528eecd24, type: 2}
   m_audioClip: {fileID: 8300000, guid: 7770824a9e7dc9b40bc7e0368c381f07, type: 3}
   m_Resource: {fileID: 8300000, guid: 7770824a9e7dc9b40bc7e0368c381f07, type: 3}
   m_PlayOnAwake: 1
