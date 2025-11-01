@@ -2,9 +2,11 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
 public class Diamond : MonoBehaviour
 {
+    // Referencia privada al AudioSource del tintineo. Se obtendrá en Awake().
+    private AudioSource tintineoSource;
+
     [SerializeField] private GameManager gameManager;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D m_rigibody2D;
@@ -19,11 +21,21 @@ public class Diamond : MonoBehaviour
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         idPickedDiamond = Animator.StringToHash("pickedDiamond");
         idDiamondIndex = Animator.StringToHash("diamondIndex");
+
+        // --- SOLUCIÓN DE SONIDO PERSISTENTE: OBTENER EL AUDIO SOURCE ---
+        // 1. Busca el AudioSource en el objeto actual (el diamante).
+        tintineoSource = GetComponent<AudioSource>();
+
+        // 2. Si no lo encuentra, busca en los objetos hijos.
+        if (tintineoSource == null)
+        {
+            tintineoSource = GetComponentInChildren<AudioSource>();
+        }
+        // ----------------------------------------------------------------
     }
 
     private void Start()
     {
-        // Asegura que el GameManager esté disponible (si usa el patrón Singleton 'instance')
         if (GameManager.instance != null)
         {
             gameManager = GameManager.instance;
@@ -46,19 +58,20 @@ public class Diamond : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            //spriteRenderer.enabled = false;
-            m_rigibody2D.simulated = false;
-            gameManager.AddDiamond();
+            // 1. DETENER SONIDO AMBIENTAL 3D (Se detiene el loop antes del SFX de recogida)
+            if (tintineoSource != null && tintineoSource.isPlaying)
+            {
+                tintineoSource.Stop(); // <-- LÍNEA CLAVE
+            }
 
-            // =========================================================
-            // === CÓDIGO AÑADIDO: Reproducir el sonido "Recoger" ===
-            // =========================================================
+            // 2. REPRODUCIR SFX DE RECOLECCIÓN (2D)
             if (SFX_Controller.Instance != null)
             {
-                // El nombre "Recoger" debe coincidir EXACTAMENTE con el campo 'Nombre' en el Inspector del SFX_Controller
                 SFX_Controller.Instance.PlaySFX("Recoger");
             }
-            // =========================================================
+
+            m_rigibody2D.simulated = false;
+            gameManager.AddDiamond();
 
             animator.SetTrigger(idPickedDiamond);// ejecutar la animacion de collect del diamond
         }
